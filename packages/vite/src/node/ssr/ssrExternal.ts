@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import { tryNodeResolve, InternalResolveOptions } from '../plugins/resolve'
+import type { InternalResolveOptions } from '../plugins/resolve'
+import { tryNodeResolve } from '../plugins/resolve'
 import {
   createDebugger,
   isDefined,
@@ -8,7 +9,7 @@ import {
   normalizePath,
   resolveFrom
 } from '../utils'
-import { Logger, ResolvedConfig } from '..'
+import type { Logger, ResolvedConfig } from '..'
 import { createFilter } from '@rollup/pluginutils'
 
 const debug = createDebugger('vite:ssr-external')
@@ -166,7 +167,7 @@ function collectExternals(
       }
 
       logger.warn(
-        `${id} is incorrectly packaged. Please contact the package author to fix.`
+        `${id} doesn't appear to be written in CJS, but also doesn't appear to be a valid ES module (i.e. it doesn't have "type": "module" or an .mjs extension for the entry point). Please contact the package author to fix.`
       )
     }
   }
